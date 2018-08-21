@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using EmployeesCatalog.Data.Data.Concrete;
+using EmployeesCatalog.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeesCatalog.Web.Controllers
@@ -14,6 +13,15 @@ namespace EmployeesCatalog.Web.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            using (var unitOfWork = new UnitOfWork())
+            {
+                unitOfWork.Organizations.Add(new Organization {Name = "Test"});
+                unitOfWork.Organizations.Add(new Organization {Name = "Test1"});
+                unitOfWork.Organizations.Add(new Organization {Name = "Test1"});
+
+                unitOfWork.Save();
+            }
+
             return new string[] { "value1", "value2" };
         }
 

@@ -1,3 +1,7 @@
 src/.vs/
 src/EmployeesCatalog.Web/bin/
 src/EmployeesCatalog.Web/obj/
+src/EmployeesCatalog.Data/obj/
+src/EmployeesCatalog.Data/bin/
+src/EmployeesCatalog.Data.Tests/bin/
+src/EmployeesCatalog.Data.Tests/obj/
