@@ -1,0 +1,426 @@
+{
+	"info": {
+		"_postman_id": "dfb39f8d-579e-4194-af8c-e96c8fd18953",
+		"name": "ASP.NET Core REST API + Angular",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Organizations",
+			"item": [
+				{
+					"name": "Create Organization",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Тестовая организация 123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:53328/api/organizations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Organization",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Тестовое имя 123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:53328/api/organizations/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"organizations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Organization",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:53328/api/organizations/1002",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"organizations",
+								"1002"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list of Organizations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:53328/api/organizations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Organization",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:53328/api/organizations/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"organizations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Departments",
+			"item": [
+				{
+					"name": "Create Department in existing Organization",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Тестовый департамент организации 1\",\n\t\"organizationId\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:53328/api/departments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"departments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Department in not existing Organization",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Тестовый департамент организации 1\",\n\t\"organizationId\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:53328/api/departments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"departments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Department",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:53328/api/departments/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"departments",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Department",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Департамент 1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:53328/api/departments/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"departments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list of Departments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:53328/api/departments/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"departments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Department",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:53328/api/departments/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"departments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "Get list of Employees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:53328/api/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Employee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Тест\",\n    \"surname\": \"Тестов\",\n    \"patronymic\": \"Тестович\",\n    \"email\": \"sidorov@test.ru\",\n    \"departmentId\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:53328/api/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Employee",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:53328/api/employees/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"employees",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Employee",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:53328/api/employees/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"employees",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Employee",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Модест\",\n    \"surname\": \"Тестов\",\n    \"patronymic\": \"Петрович\",\n    \"email\": \"testovv@test.ru\",\n    \"departmentId\": 2\n}"
+						},
+						"url": {
+							"raw": "http://localhost:53328/api/employees/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"employees",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

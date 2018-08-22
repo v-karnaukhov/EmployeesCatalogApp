@@ -1,5 +1,5 @@
-﻿using EmployeesCatalog.Data.Entities;
-using JetBrains.Annotations;
+﻿using EmployeesCatalog.Data.Data.InitialData;
+using EmployeesCatalog.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeesCatalog.Data.Concrete
@@ -15,5 +15,11 @@ namespace EmployeesCatalog.Data.Concrete
         public DbSet<Department> Departments { get; set; }
 
         public DbSet<Employee> Employees { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // наполнение тестовых данных вынесено в расширение. См. ModelBuilderExtensions.cs.
+            modelBuilder.Seed();
+        }
     }
 }

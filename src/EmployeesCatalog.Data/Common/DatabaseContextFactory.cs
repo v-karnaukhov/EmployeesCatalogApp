@@ -30,7 +30,7 @@ namespace EmployeesCatalog.Data.Common
 
         public EmployeesContext CreateDbContext(string connectionString)
         {
-            if (string.IsNullOrEmpty(_connectionString))
+            if (string.IsNullOrEmpty(connectionString))
             {
                 throw new ArgumentNullException(nameof(connectionString));
             }

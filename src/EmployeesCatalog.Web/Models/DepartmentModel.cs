@@ -1,35 +1,29 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace EmployeesCatalog.Data.Entities
+namespace EmployeesCatalog.Web.Models
 {
     /// <summary>
-    /// Описывает запись сущности "Подразделение компании" в БД.
+    /// Описывает модель данных сущности "Департамент".
     /// </summary>
-    public class Department
+    public class DepartmentModel
     {
         /// <summary>
         /// Уникальный идентификатор строки данных в БД.
         /// </summary>
+        //[Range(1, int.MaxValue)]
         public int DepartmentId { get; set; }
 
         /// <summary>
         /// Наименование подразделения.
         /// </summary>
+        [Required]
         public string Name { get; set; }
 
         /// <summary>
         /// Уникальный идентификатор записи об организации, к которой относится подразделение.
         /// </summary>
+        [Required]
         public int OrganizationId { get; set; }
-
-        /// <summary>
-        /// Родительская организация.
-        /// </summary>
-        [ForeignKey("OrganizationId")]
-        public Organization Organization { get; set; }
-
-        [NotMapped]
-        public IEnumerable<Employee> Employees { get; set; }
     }
 }

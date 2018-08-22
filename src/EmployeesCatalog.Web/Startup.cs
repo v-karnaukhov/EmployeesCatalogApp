@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using EmployeesCatalog.Data.Common;
+using EmployeesCatalog.Data.Concrete;
+using EmployeesCatalog.Data.Data.Abstract;
+using EmployeesCatalog.Data.Data.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,6 +32,8 @@ namespace EmployeesCatalog.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddAutoMapper();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,8 +48,19 @@ namespace EmployeesCatalog.Web
                 app.UseHsts();
             }
 
+            UpdateDatabase(app);
+
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        private void UpdateDatabase(IApplicationBuilder app)
+        {
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            using (var dbContext = new DatabaseContextFactory().CreateDbContext(connectionString))
+            {
+                dbContext.Database.Migrate();
+            }
         }
     }
 }
