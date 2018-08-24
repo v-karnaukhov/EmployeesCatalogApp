@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using EmployeesCatalog.Data.Data.Abstract;
 using EmployeesCatalog.Data.Entities;
+using EmployeesCatalog.Web.Extensions;
 using EmployeesCatalog.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,18 +23,18 @@ namespace EmployeesCatalog.Web.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //[HttpGet]
-        //public async Task<ICollection<EmployeeModel>> GetAll()
-        //{
-        //    var employees = await _unitOfWork.Employees.GetAllAsync();
+        [HttpGet]
+        public async Task<ICollection<EmployeeModel>> GetAll()
+        {
+            var employees = await _unitOfWork.Employees.GetAllAsync();
 
-        //    return _mapper.Map<ICollection<Employee>, ICollection<EmployeeModel>>(employees);
-        //}
+            return _mapper.Map<ICollection<Employee>, ICollection<EmployeeModel>>(employees);
+        }
 
 
         [HttpGet]
-        //public async Task<ICollection<EmployeeModel>> GetAll(
-        public async Task<EmployeePagingModel> GetAll(
+        [ExactQueryParam("filter", "sortDirection", "pageNumber", "pageSize")]
+        public async Task<EmployeePagingModel> GetAllPaging(
             [FromQuery]string filter,
             [FromQuery]string sortDirection,
             [FromQuery]int pageNumber,
