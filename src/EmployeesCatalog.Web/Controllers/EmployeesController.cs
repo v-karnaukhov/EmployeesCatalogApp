@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using EmployeesCatalog.Data.Data.Abstract;
@@ -21,12 +24,29 @@ namespace EmployeesCatalog.Web.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [HttpGet]
-        public async Task<ICollection<EmployeeModel>> GetAll()
-        {
-            var employees = await _unitOfWork.Employees.GetAllAsync();
+        //[HttpGet]
+        //public async Task<ICollection<EmployeeModel>> GetAll()
+        //{
+        //    var employees = await _unitOfWork.Employees.GetAllAsync();
 
-            return _mapper.Map<ICollection<Employee>, ICollection<EmployeeModel>>(employees);
+        //    return _mapper.Map<ICollection<Employee>, ICollection<EmployeeModel>>(employees);
+        //}
+
+
+        [HttpGet]
+        //public async Task<ICollection<EmployeeModel>> GetAll(
+        public async Task<EmployeePagingModel> GetAll(
+            [FromQuery]string filter,
+            [FromQuery]string sortDirection,
+            [FromQuery]int pageNumber,
+            [FromQuery]int pageSize)
+        {
+            // TODO: сделать IQuerable + Отдельный Count запрос.
+            var employees = await _unitOfWork.Employees.FindAllAsync(x => x.FirstName.Contains(filter));
+            var result = employees.Skip(pageNumber * pageSize).Take(pageSize);
+
+            return _mapper.Map<IEnumerable<Employee>, EmployeePagingModel>(result, opt =>
+                opt.AfterMap((src, dest) => dest.Count = employees.Count));
         }
 
         [HttpGet("{id:int}", Name = "GetEmployeeById")]

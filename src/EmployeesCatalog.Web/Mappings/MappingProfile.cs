@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using EmployeesCatalog.Data.Entities;
 using EmployeesCatalog.Web.Models;
 
@@ -26,6 +28,9 @@ namespace EmployeesCatalog.Web.Mappings
 
             CreateMap<Employee, EmployeeModel>();
             CreateMap<EmployeeModel, Employee>();
+
+            CreateMap<IEnumerable<Employee>, EmployeePagingModel>()
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.ToList()));
 
             #endregion
         }
