@@ -26,10 +26,11 @@ namespace EmployeesCatalog.Web.Mappings
 
             #region Employees
 
-            CreateMap<Employee, EmployeeModel>();
+            CreateMap<Employee, EmployeeModel>()
+                .ForMember(dest => dest.OrganizationId, opt => opt.MapFrom(src => src.Department.OrganizationId));
             CreateMap<EmployeeModel, Employee>();
 
-            CreateMap<IEnumerable<Employee>, EmployeePagingModel>()
+            CreateMap<IEnumerable<EmployeeModel>, EmployeePagingModel>()
                 .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.ToList()));
 
             #endregion

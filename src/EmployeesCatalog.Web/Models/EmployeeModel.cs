@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace EmployeesCatalog.Web.Models
 {
@@ -36,10 +37,30 @@ namespace EmployeesCatalog.Web.Models
         public string Email { get; set; }
 
         /// <summary>
+        /// Пол сотрудника.
+        /// </summary>
+        public short Sex { get; set; }
+
+        /// <summary>
+        /// Дата рождения сотрудника.
+        /// </summary>
+        public DateTime? BirthDate { get; set; }
+
+        /// <summary>
+        /// Актуальность записи о сотрудники.
+        /// </summary>
+        public bool? IsActual { get; set; }
+
+        /// <summary>
         /// Идентификатор записи о департаменте, к которому относится сотрудник.
         /// </summary>
         [Required]
         [Range(1, int.MaxValue)]
         public int DepartmentId { get; set; }
+
+        /// <summary>
+        /// Уникальный идентификатор организации, к которой относится департамент, к которому относится сотрудник.
+        /// </summary>
+        public int? OrganizationId { get; set; }
     }
 }

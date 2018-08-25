@@ -1,0 +1,39 @@
+.container {
+    width: 500px;
+    height: 850px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+}
+
+.employee {
+    display: flex;
+    flex-direction: column;
+}
+
+.employee>* {
+    width: 100%;
+}
+
+.sex-radio-group {
+    display: inline-flex;
+    flex-direction: column;
+  }
+  
+  .sex-radio-button {
+    margin: 5px;
+  }
+  
+  .sex-radio-label {
+    margin: 15px 0;
+  }
+
+  .actions-buttons {
+      text-align: right;
+  }

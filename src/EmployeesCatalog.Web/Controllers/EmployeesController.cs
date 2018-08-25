@@ -41,10 +41,12 @@ namespace EmployeesCatalog.Web.Controllers
             [FromQuery]int pageSize)
         {
             // TODO: сделать IQuerable + Отдельный Count запрос.
-            var employees = await _unitOfWork.Employees.FindAllAsync(x => x.FirstName.Contains(filter));
-            var result = employees.Skip(pageNumber * pageSize).Take(pageSize);
+            //var employees = await _unitOfWork.Employees.FindAllAsync(x => x.FirstName.Contains(filter));
+            var employees = await _unitOfWork.Employees.GetAllAsync(x => x.Department);
+            var queryResult = employees.Skip(pageNumber * pageSize).Take(pageSize);
+            var result = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeModel>>(queryResult);
 
-            return _mapper.Map<IEnumerable<Employee>, EmployeePagingModel>(result, opt =>
+            return _mapper.Map<IEnumerable<EmployeeModel>, EmployeePagingModel>(result, opt =>
                 opt.AfterMap((src, dest) => dest.Count = employees.Count));
         }
 
@@ -56,7 +58,7 @@ namespace EmployeesCatalog.Web.Controllers
                 return NotFound("Incorrect Employee id");
             }
 
-            var entry = await _unitOfWork.Employees.GetAsync(id);
+            var entry = await _unitOfWork.Employees.FindAsync(x => x.EmployeeId == id, inc => inc.Department);
             if (entry == null)
             {
                 return NotFound($"Employee with id: {id} not found");
@@ -104,6 +106,9 @@ namespace EmployeesCatalog.Web.Controllers
             entryFromDb.Surname = employeeModel.Surname;
             entryFromDb.Email = employeeModel.Email;
             entryFromDb.DepartmentId = employeeModel.DepartmentId;
+            entryFromDb.BirthDate = employeeModel.BirthDate;
+            entryFromDb.Sex = employeeModel.Sex;
+            entryFromDb.IsActual = employeeModel.IsActual;
 
             _unitOfWork.Employees.Update(entryFromDb);
 

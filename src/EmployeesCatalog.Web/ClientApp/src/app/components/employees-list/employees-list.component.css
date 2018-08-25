@@ -79,3 +79,18 @@
   th.mat-sort-header-sorted {
     color: black;
   }
+
+  th.mat-column-actions {
+    width: 225px;
+    text-align: center;
+  }
+
+  td.mat-column-actions {
+    text-align: right;
+  }
+
+  .employees-list .add-btn {
+    background: rgb(76, 175, 80);
+    color: rgb(255, 255, 255);
+    float: right;
+  }

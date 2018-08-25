@@ -33,4 +33,25 @@ export class Employee {
          * Идентификатор записи о департаменте, к которому относится сотрудник.
          */
         public departmentId: number;
+
+        /**
+         * Идентификатор организации, к департаменту которой относится сотрудник.
+         */
+        public organizationId: number;
+
+        /**
+         * Дата рождения.
+         */
+        public birthDate?: string;
+
+        /**
+         * Актуальность записи о сотруднике.
+         */
+        public isActual: boolean = false;
+
+        /**
+         * Пол сотрудника.
+         */
+        public sex: number = 0;
+        
 }

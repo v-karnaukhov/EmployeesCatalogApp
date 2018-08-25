@@ -78,9 +78,16 @@ namespace EmployeesCatalog.Data.Data.Concrete
             return await _context.Set<T>().Where(findPredicate).ToListAsync();
         }
 
-        public async Task<T> FindAsync(Expression<Func<T, bool>> findPredicate)
+        public async Task<T> FindAsync(Expression<Func<T, bool>> findPredicate, params Expression<Func<T, object>>[] includes)
         {
-            return await _context.Set<T>().SingleOrDefaultAsync(findPredicate);
+            IQueryable<T> query = _context.Set<T>();
+
+            foreach (Expression<Func<T, object>> include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return  await query.SingleOrDefaultAsync(findPredicate);
         }
 
         public virtual IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
@@ -90,9 +97,18 @@ namespace EmployeesCatalog.Data.Data.Concrete
             return query;
         }
 
-        public virtual async Task<ICollection<T>> FindByAsync(Expression<Func<T, bool>> predicate)
+        public virtual async Task<ICollection<T>> FindByAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
         {
-            return await _context.Set<T>().Where(predicate).ToListAsync();
+            IQueryable<T> query = _context.Set<T>();
+
+            foreach (Expression<Func<T, object>> include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            query =  query.Where(predicate);
+
+            return await query.ToListAsync();
         }
 
         public T Get(int id)
@@ -105,9 +121,16 @@ namespace EmployeesCatalog.Data.Data.Concrete
             return _context.Set<T>();
         }
 
-        public virtual async Task<ICollection<T>> GetAllAsync()
+        public virtual async Task<ICollection<T>> GetAllAsync(params Expression<Func<T, object>>[] includes)
         {
-            return await _context.Set<T>().ToListAsync();
+            IQueryable<T> query = _context.Set<T>();
+
+            foreach (Expression<Func<T, object>> include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return await query.ToListAsync();
         }
 
         public virtual async Task<T> GetAsync(int id)

@@ -72,18 +72,6 @@ export class EmployeesService {
     );
   }
 
-  /* GET Employees whose name contains search term */
-  searchEmployees(term: string): Observable<Employee[]> {
-    if (!term.trim()) {
-      // if not search term, return empty Employees array.
-      return of([]);
-    }
-    return this.http.get<Employee[]>(`${this.employeesUrl}/?name=${term}`).pipe(
-      tap(_ => this.log(`found Employees matching "${term}"`)),
-      catchError(this.handleError<Employee[]>("searchEmployees", []))
-    );
-  }
-
   //////// Save methods //////////
 
   /** POST: add a new Employee to the server */
@@ -100,7 +88,7 @@ export class EmployeesService {
 
   /** DELETE: delete the Employee from the server */
   deleteEmployee(employee: Employee | number): Observable<Employee> {
-    debugger;
+
     const id = typeof employee === "number" ? employee : employee.employeeId;
     const url = `${this.employeesUrl}/${id}`;
 
@@ -112,7 +100,13 @@ export class EmployeesService {
 
   /** PUT: update the Employee on the server */
   updateEmployee(employee: Employee): Observable<any> {
-    return this.http.put(this.employeesUrl, employee, httpOptions).pipe(
+
+    const id = employee.employeeId;
+    const url = `${this.employeesUrl}/${id}`;
+
+    debugger;
+
+    return this.http.put(url, employee, httpOptions).pipe(
       tap(_ => this.log(`updated Employee id=${employee.employeeId}`)),
       catchError(this.handleError<any>("updateEmployee"))
     );

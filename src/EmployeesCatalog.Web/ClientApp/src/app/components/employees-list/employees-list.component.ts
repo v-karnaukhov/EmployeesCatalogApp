@@ -4,6 +4,7 @@ import { EmployeesService as EmployeeService } from "../../services/employees.se
 import { MatPaginator, MatTableDataSource, MatSort } from "@angular/material";
 import { Observable, of, BehaviorSubject, fromEvent, merge } from "rxjs";
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
+import { EmployeePagingModel } from '../../Data/EmployeePagingModel';
 import {
   catchError,
   finalize,
@@ -20,7 +21,14 @@ import {
   styleUrls: ["./employees-list.component.css"]
 })
 export class EmployeesListComponent {
-  displayedColumns: string[] = [ "employeeId", "surname", "firstName", "patronymic", "email" ];
+  displayedColumns: string[] = [
+    "employeeId",
+    "surname",
+    "firstName",
+    "patronymic",
+    "email",
+    "actions"
+  ];
   dataSource = new MatTableDataSource();
   totalEmployeesCount: number = 0;
 
@@ -44,7 +52,7 @@ export class EmployeesListComponent {
 
     fromEvent(this.input.nativeElement, "keyup")
       .pipe(
-        debounceTime(150),
+        debounceTime(250),
         distinctUntilChanged(),
         tap(() => {
           this.paginator.pageIndex = 0;
@@ -73,21 +81,24 @@ export class EmployeesListComponent {
       });
   }
 
-  //add(name: string): void {
-  //  name = name.trim();
-  //  if (!name) {
-  //    return;
-  //  }
+  editEmployee(employee: Employee): void {}
 
-  //  this.employeeService
-  //    .addEmployee({ firstName: name } as Employee)
-  //    .subscribe(hero => {
-  //      this.employees.push(hero);
-  //    });
-  //}
+  deleteEmployee(employee: Employee): void {
+    this.employeeService.deleteEmployee(employee)
+      .subscribe(_ => {
+        
+        let index: number = this.dataSource.data.findIndex(d => d === employee);
+        console.log(this.dataSource.data.findIndex(d => d === employee));
+        this.dataSource.data.splice(index,1);
+  
+        this.dataSource = new MatTableDataSource(this.dataSource.data);
+        
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+        });
 
-  //delete(employee: Employee): void {
-  //  this.employees = this.employees.filter(h => h !== employee);
-  //  this.employeeService.deleteEmployee(employee).subscribe();
-  //}
+        console.log(`${employee.employeeId} remove from list`);
+
+      });
+  }
 }

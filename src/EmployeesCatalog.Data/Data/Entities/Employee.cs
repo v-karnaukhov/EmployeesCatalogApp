@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeesCatalog.Data.Entities
@@ -40,6 +41,21 @@ namespace EmployeesCatalog.Data.Entities
         /// Идентификатор записи о департаменте, к которому относится сотрудник.
         /// </summary>
         public int DepartmentId { get; set; }
+
+        /// <summary>
+        /// Пол сотрудника.
+        /// </summary>
+        public short Sex { get; set; }
+
+        /// <summary>
+        /// Дата рождения сотрудника.
+        /// </summary>
+        public DateTime? BirthDate { get; set; }
+
+        /// <summary>
+        /// Актуальность записи о сотрудники.
+        /// </summary>
+        public bool? IsActual { get; set; }
 
         /// <summary>
         /// Экземпляр <see cref="Organization"/>, в котором числится сотрудник.

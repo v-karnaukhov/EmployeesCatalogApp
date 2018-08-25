@@ -15,12 +15,12 @@ namespace EmployeesCatalog.Data.Data.Abstract
         T Find(Expression<Func<T, bool>> findPredicate);
         ICollection<T> FindAll(Expression<Func<T, bool>> findPredicate);
         Task<ICollection<T>> FindAllAsync(Expression<Func<T, bool>> findPredicate);
-        Task<T> FindAsync(Expression<Func<T, bool>> findPredicate);
+        Task<T> FindAsync(Expression<Func<T, bool>> findPredicate, params Expression<Func<T, object>>[] includes);
         IQueryable<T> FindBy(Expression<Func<T, bool>> predicate);
-        Task<ICollection<T>> FindByAsync(Expression<Func<T, bool>> predicate);
+        Task<ICollection<T>> FindByAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);
         T Get(int id);
         IQueryable<T> GetAll();
-        Task<ICollection<T>> GetAllAsync();
+        Task<ICollection<T>> GetAllAsync(params Expression<Func<T, object>>[] includes);
         Task<T> GetAsync(int id);
         void Save();
         Task<int> SaveAsync();

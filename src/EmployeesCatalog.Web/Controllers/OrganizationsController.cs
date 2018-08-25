@@ -48,6 +48,23 @@ namespace EmployeesCatalog.Web.Controllers
             return new ObjectResult(_mapper.Map<Organization, OrganizationModel>(entry));
         }
 
+        [HttpGet("{id:int}/departments", Name = "GetOrganizationDepartments")]
+        public async Task<IActionResult> GetOrganizationDepartments(int id)
+        {
+            if (id <= 0)
+            {
+                return NotFound("Incorrect organization id");
+            }
+
+            var entry = await _unitOfWork.Organizations.FindAsync(x=>x.OrganizationId == id, inc => inc.Departments);
+            if (entry == null)
+            {
+                return NotFound($"Organization with id: {id} not found");
+            }
+
+            return new ObjectResult(_mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentModel>>(entry.Departments));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(OrganizationModel organization)
         {
