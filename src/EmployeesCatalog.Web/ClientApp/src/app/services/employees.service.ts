@@ -104,8 +104,6 @@ export class EmployeesService {
     const id = employee.employeeId;
     const url = `${this.employeesUrl}/${id}`;
 
-    debugger;
-
     return this.http.put(url, employee, httpOptions).pipe(
       tap(_ => this.log(`updated Employee id=${employee.employeeId}`)),
       catchError(this.handleError<any>("updateEmployee"))

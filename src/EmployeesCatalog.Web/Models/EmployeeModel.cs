@@ -11,7 +11,7 @@ namespace EmployeesCatalog.Web.Models
         /// <summary>
         /// Уникальный идентификатор экземпляра сущности.
         /// </summary>
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
 
         /// <summary>
         /// Имя сотрудника.

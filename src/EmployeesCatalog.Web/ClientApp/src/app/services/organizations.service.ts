@@ -7,6 +7,7 @@ import { MessagesService as MessageService } from "./messages.service";
 import { Employee } from "../Data/Employee";
 import { EmployeePagingModel } from "../Data/EmployeePagingModel";
 import { Department } from "../Data/Department";
+import { Organization } from "../Data/Organization";
 
 const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -16,7 +17,7 @@ const httpOptions = {
   providedIn: "root"
 })
 export class OrganizationsService {
-  private employeesUrl = "api/Organizations";
+  private organizationsUrl = "api/Organizations";
 
   constructor(
     private http: HttpClient,
@@ -25,11 +26,18 @@ export class OrganizationsService {
 
   getOrganizationDepartments(organizationId: number) {
 
-    return this.http.get<Department[]>(`${this.employeesUrl}/${organizationId}/departments`).pipe(
+    return this.http.get<Department[]>(`${this.organizationsUrl}/${organizationId}/departments`).pipe(
       tap(employees => this.log("fetched organization departments")),
       catchError(this.handleError("getOrganizationDepartments", []))
     );
     
+  }
+
+  getAllOrganization() {
+    return this.http.get<Organization[]>(this.organizationsUrl).pipe(
+      tap(employees => this.log("fetched Organizations")),
+      catchError(this.handleError("getAllOrganization", []))
+    );
   }
 
   /**

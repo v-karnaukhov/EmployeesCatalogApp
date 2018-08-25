@@ -3,7 +3,7 @@
     <mat-tab label="Основная информация">
       <br>
       <br>
-      <form [formGroup]='form' class="employee" (submit)="save()">
+      <form [formGroup]='form' class="employee">
 
         <mat-form-field>
           <input matInput type="string" placeholder="Фамилия" formControlName="surname">
@@ -23,7 +23,15 @@
           <input matInput type="string" placeholder="Отчество" formControlName="patronymic">
         </mat-form-field>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field *ngIf="isNewEmployeeMode">
+          <mat-select placeholder="Организация" (selectionChange)="onOrganizationChange($event.value)">
+            <mat-option *ngFor="let organization of organizations" [value]="organization.organizationId">
+              {{organization.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" *ngIf="!isNewEmployeeMode || organizationId > 0">
           <mat-select placeholder="Департамент" formControlName="departmentId">
             <mat-option *ngFor="let department of departmentOptions" [value]="department.departmentId">
               {{department.name}}
@@ -66,6 +74,10 @@
         </section>
       </form>
     </mat-tab>
-    <mat-tab label="История изменений подразделений"> {{form.value | json}} </mat-tab>
+    <mat-tab label="История изменений подразделений">
+       {{form.value | json}}
+       <br>
+       {{organizationId}}
+    </mat-tab>
   </mat-tab-group>
 </div>

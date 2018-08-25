@@ -11,6 +11,8 @@ import {
   FormGroup,
   FormControl
 } from "@angular/forms";
+import { Organization } from "../../Data/Organization";
+import {Router} from '@angular/router';
 
 @Component({
   selector: "app-employee-details",
@@ -45,17 +47,30 @@ export class EmployeeDetailsComponent implements OnInit {
   };
 
   departmentOptions: Department[] = [];
+  isNewEmployeeMode: boolean = false;
+  organizationId: number = 0;
+  organizations: Organization[];
 
   constructor(
     private route: ActivatedRoute,
     private employeeService: EmployeesService,
     private organizationService: OrganizationsService,
     private location: Location,
-    private fb: FormBuilder
-  ) {}
+    private fb: FormBuilder,
+    private router: Router
+  ) {
+
+    this.isNewEmployeeMode = this.route.snapshot.paramMap.get("id") == "add";
+
+  }
 
   ngOnInit() {
-    this.getEmployee();
+    if(!this.isNewEmployeeMode) {
+        this.getEmployee();
+    } else {
+      this.getOrganizations();
+    }
+
     this.createForm();
   }
 
@@ -95,7 +110,19 @@ export class EmployeeDetailsComponent implements OnInit {
 
   getDepartments(organizationId: number): void {
     this.organizationService.getOrganizationDepartments(organizationId)
-    .subscribe(departments => this.departmentOptions = departments);
+    .subscribe(departments => {
+      this.departmentOptions = departments
+    });
+  }
+
+  getOrganizations(): void {
+    this.organizationService.getAllOrganization()
+    .subscribe(organizations => this.organizations = organizations);
+  }
+
+  onOrganizationChange(organizationId: number): void {
+    this.organizationId = organizationId;
+    this.getDepartments(organizationId);
   }
 
   initializeForm(): void {
@@ -122,6 +149,12 @@ export class EmployeeDetailsComponent implements OnInit {
       return;
     }
 
-    this.employeeService.updateEmployee(this.form.value).subscribe();
+    if(this.isNewEmployeeMode) {
+      this.employeeService.addEmployee(this.form.value).subscribe();
+    } else {
+      this.employeeService.updateEmployee(this.form.value).subscribe();
+    }
+
+    this.router.navigateByUrl("/employees");
   }
 }
