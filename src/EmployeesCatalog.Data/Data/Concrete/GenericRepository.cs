@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EmployeesCatalog.Data.Data.Abstract;
+using EmployeesCatalog.Data.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeesCatalog.Data.Data.Concrete
@@ -90,9 +91,15 @@ namespace EmployeesCatalog.Data.Data.Concrete
             return  await query.SingleOrDefaultAsync(findPredicate);
         }
 
-        public virtual IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
+        public virtual IQueryable<T> FindBy(Specification<T> specification, params Expression<Func<T, object>>[] includes)
         {
-            var query = _context.Set<T>().Where(predicate);
+            IQueryable<T> query = _context.Set<T>();
+            foreach (Expression<Func<T, object>> include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            query = query.Where(specification.IsSatisfiedBy());
 
             return query;
         }

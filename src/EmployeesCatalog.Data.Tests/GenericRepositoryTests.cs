@@ -5,6 +5,7 @@ using EmployeesCatalog.Data.Concrete;
 using EmployeesCatalog.Data.Data.Abstract;
 using EmployeesCatalog.Data.Data.Concrete;
 using EmployeesCatalog.Data.Entities;
+using EmployeesCatalog.Data.Specifications.Organizations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Remotion.Linq.Clauses;
@@ -31,6 +32,7 @@ namespace EmployeesCatalog.Data.Tests
             builder.UseInMemoryDatabase(databaseName: _inMemoryDbName);
 
             var context = new EmployeesContext(builder.Options);
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             return context;
@@ -184,8 +186,8 @@ namespace EmployeesCatalog.Data.Tests
 
             using (var newUnitOfWork = CreateInMemoryUnitOfWork())
             {
-                Expression<Func<Organization, bool>> findPredicate = x => x.Name.StartsWith("Organization");
-                var resultOrganizations = newUnitOfWork.Organizations.FindBy(findPredicate).ToList();
+                var spec = new OrganizationNameStartsWith("Organization");
+                var resultOrganizations = newUnitOfWork.Organizations.FindBy(spec).ToList();
 
                 Assert.IsNotNull(resultOrganizations);
                 Assert.AreEqual(1, resultOrganizations.Count);

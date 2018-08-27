@@ -131,6 +131,29 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get Organizations departments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:53328/api/organizations/1/departments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"organizations",
+								"1",
+								"departments"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -415,6 +438,69 @@
 								"api",
 								"employees",
 								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get filtered list of Employees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:53328/api/employees/?filter=''&sortDirection=asc&pageNumber=1&pageSize=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"employees",
+								""
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "''"
+								},
+								{
+									"key": "sortDirection",
+									"value": "asc"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get employee department changes history",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:53328/api/employees/2/departmentsChangeHistory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53328",
+							"path": [
+								"api",
+								"employees",
+								"2",
+								"departmentsChangeHistory"
 							]
 						}
 					},

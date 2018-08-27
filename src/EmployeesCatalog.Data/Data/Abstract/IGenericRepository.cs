@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using EmployeesCatalog.Data.Specifications;
 
 namespace EmployeesCatalog.Data.Data.Abstract
 {
@@ -16,7 +17,7 @@ namespace EmployeesCatalog.Data.Data.Abstract
         ICollection<T> FindAll(Expression<Func<T, bool>> findPredicate);
         Task<ICollection<T>> FindAllAsync(Expression<Func<T, bool>> findPredicate);
         Task<T> FindAsync(Expression<Func<T, bool>> findPredicate, params Expression<Func<T, object>>[] includes);
-        IQueryable<T> FindBy(Expression<Func<T, bool>> predicate);
+        IQueryable<T> FindBy(Specification<T> specification, params Expression<Func<T, object>>[] includes);
         Task<ICollection<T>> FindByAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);
         T Get(int id);
         IQueryable<T> GetAll();

@@ -6,9 +6,11 @@ using AutoMapper;
 using EmployeesCatalog.Data.Data.Abstract;
 using EmployeesCatalog.Data.Data.Entities;
 using EmployeesCatalog.Data.Entities;
+using EmployeesCatalog.Data.Specifications.Employees;
 using EmployeesCatalog.Web.Extensions;
 using EmployeesCatalog.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeesCatalog.Web.Controllers
 {
@@ -39,14 +41,16 @@ namespace EmployeesCatalog.Web.Controllers
         public async Task<EmployeePagingModel> GetAllPaging(
             [FromQuery]string filter,
             [FromQuery]string sortDirection,
-            [FromQuery]int pageNumber,
-            [FromQuery]int pageSize)
+            [FromQuery]int pageNumber = 0,
+            [FromQuery]int pageSize = 5)
         {
-            // TODO: сделать IQuerable + Отдельный Count запрос.
-            //var employees = await _unitOfWork.Employees.FindAllAsync(x => x.FirstName.Contains(filter));
-            var employees = await _unitOfWork.Employees.GetAllAsync(x => x.Department);
-            var queryResult = employees.Skip(pageNumber * pageSize).Take(pageSize);
-            var result = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeModel>>(queryResult);
+            var employees = await _unitOfWork.Employees
+                .FindBy(new EmployeeByFullNamePart(filter), x => x.Department)
+                .Skip(pageNumber * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var result = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeModel>>(employees);
 
             return _mapper.Map<IEnumerable<EmployeeModel>, EmployeePagingModel>(result, opt =>
                 opt.AfterMap((src, dest) => dest.Count = employees.Count));
