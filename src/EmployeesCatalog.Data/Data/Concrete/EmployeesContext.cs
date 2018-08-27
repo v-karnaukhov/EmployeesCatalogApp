@@ -1,11 +1,12 @@
 ﻿using EmployeesCatalog.Data.Data.Entities;
 using EmployeesCatalog.Data.Data.InitialData;
 using EmployeesCatalog.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeesCatalog.Data.Concrete
 {
-    public class EmployeesContext : DbContext
+    public class EmployeesContext : IdentityDbContext<AppUser>
     {
         public EmployeesContext(DbContextOptions<EmployeesContext> options) : base(options)
         {
@@ -19,12 +20,11 @@ namespace EmployeesCatalog.Data.Concrete
 
         public DbSet<EmployeeDepartmentsChangesHistory> DepartmentsChangesHistories { get; set; }
 
-        public DbSet<JobSeeker> JobSeekers { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // наполнение тестовых данных вынесено в расширение. См. ModelBuilderExtensions.cs.
-            modelBuilder.Seed();
+          base.OnModelCreating(modelBuilder);
+          // наполнение тестовых данных вынесено в расширение. См. ModelBuilderExtensions.cs.
+          modelBuilder.Seed();
         }
     }
 }

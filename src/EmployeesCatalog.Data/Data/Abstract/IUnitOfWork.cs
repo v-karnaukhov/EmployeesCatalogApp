@@ -11,7 +11,6 @@ namespace EmployeesCatalog.Data.Data.Abstract
         IGenericRepository<Department> Departments { get; }
         IGenericRepository<Employee> Employees { get; }
         IGenericRepository<EmployeeDepartmentsChangesHistory> EmployeeChangeDepartmentHistory { get; }
-        IGenericRepository<JobSeeker> JobSeekers { get; }
 
         int Save();
         Task<int> SaveAsync();

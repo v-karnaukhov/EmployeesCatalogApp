@@ -14,7 +14,6 @@ import {
   MatBottomSheetModule,
   MatButtonModule,
   MatButtonToggleModule,
-  MatCardModule,
   MatCheckboxModule,
   MatChipsModule,
   MatDatepickerModule,
@@ -45,12 +44,14 @@ import {
   MatTooltipModule,
   MatTreeModule
 } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfigService } from "./utils/config.service";
 import { XHRBackend } from "@angular/http";
 import { AuthenticateXHRBackend } from "./authenticate-xhr.backend";
 import { HomeComponent } from './components/home/home.component';
 import { AccountModule } from "./account/account.module";
+import { AuthGuard } from "./auth.guard";
 
 @NgModule({
   declarations: [
@@ -106,7 +107,7 @@ import { AccountModule } from "./account/account.module";
     MatTreeModule,
     BrowserAnimationsModule
   ],
-  providers: [ConfigService, { 
+  providers: [AuthGuard, ConfigService, { 
     provide: XHRBackend, 
     useClass: AuthenticateXHRBackend
   }],

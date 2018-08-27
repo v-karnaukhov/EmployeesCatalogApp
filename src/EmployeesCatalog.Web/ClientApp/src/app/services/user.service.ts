@@ -39,7 +39,6 @@ export class UserService extends BaseService {
   }
 
   login(userName, password) {
-debugger;
     return this.http
       .post(
         "api/auth/login",
@@ -47,7 +46,6 @@ debugger;
         httpOptions
       ).pipe( 
         tap(res => {
-          debugger;
           localStorage.setItem("auth_token", res["auth_token"]);
           this.loggedIn = true;
           this._authNavStatusSource.next(true);

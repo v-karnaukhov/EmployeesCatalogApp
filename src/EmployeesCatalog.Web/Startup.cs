@@ -67,7 +67,7 @@ namespace EmployeesCatalog.Web
       });
 
       services.AddDbContext<EmployeesContext>(options =>
-        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("EmployeesCatalog.Data")));
       services.AddIdentity<AppUser, IdentityRole>
         (o =>
         {

@@ -15,7 +15,6 @@ namespace EmployeesCatalog.Web.Controllers
   [Route("api/[controller]")]
   public class AccountsController : Controller
   {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<AppUser> _userManager;
     private readonly IMapper _mapper;
 
@@ -23,7 +22,6 @@ namespace EmployeesCatalog.Web.Controllers
     {
       _userManager = userManager;
       _mapper = mapper;
-      _unitOfWork = unitOfWork;
     }
 
     // POST api/accounts
@@ -40,9 +38,6 @@ namespace EmployeesCatalog.Web.Controllers
       var result = await _userManager.CreateAsync(userIdentity, model.Password);
 
       if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
-
-      await _unitOfWork.JobSeekers.AddAsync(new JobSeeker { IdentityId = userIdentity.Id, Location = model.Location });
-      await _unitOfWork.SaveAsync();
 
       return new OkObjectResult("Account created");
     }

@@ -507,6 +507,23 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "Add user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

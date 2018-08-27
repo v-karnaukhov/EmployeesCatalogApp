@@ -16,3 +16,4 @@ EmployeesCatalog
 Запуск приложения:
 1. Выполнить инициализацию БД : выполнить Update-Database для EmployeesCatalog.Data проекта.
 2. Запустить дефолтный профиль EmployeesCatalog.Web проекта в VS.
+3. C пом. PostMan добавить тестового Identity пользователя. См. "postman tests" -> Accounts -> Add user

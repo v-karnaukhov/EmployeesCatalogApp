@@ -49,7 +49,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
         // .finally(() => this.isRequesting = false)
         .subscribe(
           result => {
-            debugger;
             if (result) {
               this.router.navigate(["/employees"]);
             }
