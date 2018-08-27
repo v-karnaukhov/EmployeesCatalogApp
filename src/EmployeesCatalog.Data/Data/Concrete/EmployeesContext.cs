@@ -19,6 +19,8 @@ namespace EmployeesCatalog.Data.Concrete
 
         public DbSet<EmployeeDepartmentsChangesHistory> DepartmentsChangesHistories { get; set; }
 
+        public DbSet<JobSeeker> JobSeekers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // наполнение тестовых данных вынесено в расширение. См. ModelBuilderExtensions.cs.

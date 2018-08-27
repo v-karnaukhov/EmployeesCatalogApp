@@ -16,6 +16,7 @@ namespace EmployeesCatalog.Data.Data.Concrete
         private IGenericRepository<Department> _departmentRepository;
         private IGenericRepository<Employee> _employeeRepository;
         private IGenericRepository<EmployeeDepartmentsChangesHistory> _employeeChangeDepartmentHistory;
+        private IGenericRepository<JobSeeker> _jobSeekers;
 
         public UnitOfWork()
         {
@@ -37,6 +38,7 @@ namespace EmployeesCatalog.Data.Data.Concrete
         public IGenericRepository<Department> Departments =>_departmentRepository ?? (_departmentRepository = new GenericRepository<Department>(_context));
 
         public IGenericRepository<Employee> Employees => _employeeRepository ?? (_employeeRepository = new GenericRepository<Employee>(_context));
+        public IGenericRepository<JobSeeker> JobSeekers => _jobSeekers ?? (_jobSeekers= new GenericRepository<JobSeeker>(_context));
 
         public IGenericRepository<EmployeeDepartmentsChangesHistory> EmployeeChangeDepartmentHistory =>
             _employeeChangeDepartmentHistory ?? (_employeeChangeDepartmentHistory =
