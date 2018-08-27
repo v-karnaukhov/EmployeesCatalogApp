@@ -6,6 +6,7 @@ import { catchError, map, tap } from "rxjs/operators";
 import { MessagesService as MessageService } from "./messages.service";
 import { Employee } from "../Data/Employee";
 import { EmployeePagingModel } from "../Data/EmployeePagingModel";
+import { EmployeeDepartmentChangeHistory } from '../Data/EmployeeDepartmentChangeHistory';
 
 const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -32,7 +33,7 @@ export class EmployeesService {
     filter: string = '',
     sortDirection: string = 'asc',
     pageIndex: number = 0,
-    pageSize: number = 3
+    pageSize: number = 5
   ): Observable<EmployeePagingModel> {
     return this.http
       .get<EmployeePagingModel>(`${this.employeesUrl}`, {
@@ -107,6 +108,16 @@ export class EmployeesService {
     return this.http.put(url, employee, httpOptions).pipe(
       tap(_ => this.log(`updated Employee id=${employee.employeeId}`)),
       catchError(this.handleError<any>("updateEmployee"))
+    );
+  }
+
+  getEmployeeDepartmentsChangeHistory(id: number): Observable<EmployeeDepartmentChangeHistory[]> {
+
+    const url = `${this.employeesUrl}/${id}/departmentsChangeHistory`;
+
+    return this.http.get(url, httpOptions).pipe(
+      tap(_ => this.log(`getEmployeeDepartmentsChangeHistory. Employee id=${id}`)),
+      catchError(this.handleError<any>("getEmployeeDepartmentsChangeHistory"))
     );
   }
 

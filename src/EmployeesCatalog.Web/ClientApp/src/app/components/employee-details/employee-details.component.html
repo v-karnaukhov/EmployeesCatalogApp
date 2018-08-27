@@ -74,10 +74,14 @@
         </section>
       </form>
     </mat-tab>
-    <mat-tab label="История изменений подразделений">
-       {{form.value | json}}
-       <br>
-       {{organizationId}}
+    <mat-tab label="История изменений подразделений" *ngIf="(!isNewEmployeeMode || organizationId > 0) && departmentsChangeHistory.length > 0">
+      <mat-list>
+          <h3 mat-subheader>Изменения департамента сотрудика:</h3>
+          <mat-list-item *ngFor="let history of departmentsChangeHistory">
+            <h4 mat-line>{{history.currentDepartment.name}}  -->  {{history.newDepartment.name}}</h4>
+            <p mat-line> {{history.changeDate | date}} </p>
+          </mat-list-item>
+      </mat-list>
     </mat-tab>
   </mat-tab-group>
 </div>

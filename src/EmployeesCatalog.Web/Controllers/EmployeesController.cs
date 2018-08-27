@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using EmployeesCatalog.Data.Data.Abstract;
+using EmployeesCatalog.Data.Data.Entities;
 using EmployeesCatalog.Data.Entities;
 using EmployeesCatalog.Web.Extensions;
 using EmployeesCatalog.Web.Models;
@@ -101,13 +103,25 @@ namespace EmployeesCatalog.Web.Controllers
                 return NotFound();
             }
 
+            // если департамент не совпадает с текущим, то создаем запись в истории.
+            if (entryFromDb.DepartmentId != employeeModel.DepartmentId)
+            {
+                _unitOfWork.EmployeeChangeDepartmentHistory.Add(new EmployeeDepartmentsChangesHistory
+                {
+                    CurrentDepartmentId= entryFromDb.DepartmentId,
+                    NewDepartmentId = employeeModel.DepartmentId,
+                    EmployeeId = entryFromDb.EmployeeId,
+                    ChangeDate = DateTime.Now
+                });
+            }
+
+            entryFromDb.BirthDate = employeeModel?.BirthDate;
+            entryFromDb.DepartmentId = employeeModel.DepartmentId;
+            entryFromDb.Sex = employeeModel.Sex;
+            entryFromDb.Email = employeeModel.Email;
+            entryFromDb.Surname = employeeModel.Surname;
             entryFromDb.FirstName = employeeModel.FirstName;
             entryFromDb.Patronymic = employeeModel.Patronymic;
-            entryFromDb.Surname = employeeModel.Surname;
-            entryFromDb.Email = employeeModel.Email;
-            entryFromDb.DepartmentId = employeeModel.DepartmentId;
-            entryFromDb.BirthDate = employeeModel.BirthDate;
-            entryFromDb.Sex = employeeModel.Sex;
             entryFromDb.IsActual = employeeModel.IsActual;
 
             _unitOfWork.Employees.Update(entryFromDb);
@@ -135,6 +149,23 @@ namespace EmployeesCatalog.Web.Controllers
             await _unitOfWork.SaveAsync();
 
             return NoContent();
+        }
+
+        [HttpGet("{id:int}/departmentsChangeHistory")]
+        public async Task<IActionResult> GetDepartmentChangeHistory(int id)
+        {
+            if (id <= 0)
+            {
+                return NotFound();
+            }
+
+            var changeHistory =
+                await _unitOfWork.EmployeeChangeDepartmentHistory.FindByAsync(
+                    x => x.EmployeeId == id,
+                    inc => inc.CurrentDepartment,
+                    inc => inc.NewDepartment);
+
+            return new ObjectResult(changeHistory);
         }
     }
 }

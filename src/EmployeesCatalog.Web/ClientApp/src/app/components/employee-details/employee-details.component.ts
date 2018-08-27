@@ -13,6 +13,7 @@ import {
 } from "@angular/forms";
 import { Organization } from "../../Data/Organization";
 import {Router} from '@angular/router';
+import { EmployeeDepartmentChangeHistory } from '../../Data/EmployeeDepartmentChangeHistory';
 
 @Component({
   selector: "app-employee-details",
@@ -50,6 +51,7 @@ export class EmployeeDetailsComponent implements OnInit {
   isNewEmployeeMode: boolean = false;
   organizationId: number = 0;
   organizations: Organization[];
+  departmentsChangeHistory: EmployeeDepartmentChangeHistory[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -74,7 +76,9 @@ export class EmployeeDetailsComponent implements OnInit {
     this.createForm();
   }
 
-  /** Создание формы*/
+  /**
+   *  Создает форму сотрудника.
+   * */
   createForm() {
     this.form = this.fb.group({
       firstName: [
@@ -100,12 +104,15 @@ export class EmployeeDetailsComponent implements OnInit {
   }
 
   getEmployee(): void {
+
     let id = this.route.snapshot.paramMap.get("id");
     this.employeeService.getEmployee(+id).subscribe(employee => {
       this.employee = employee;
       this.initializeForm();
-      this.getDepartments(employee.organizationId);
+      this.getDepartments(employee.organizationId)
+      this.getEmployeeDepartmentsChangeHistory(employee.employeeId);
     });
+
   }
 
   getDepartments(organizationId: number): void {
@@ -118,6 +125,13 @@ export class EmployeeDetailsComponent implements OnInit {
   getOrganizations(): void {
     this.organizationService.getAllOrganization()
     .subscribe(organizations => this.organizations = organizations);
+  }
+
+  getEmployeeDepartmentsChangeHistory(id: number): void {
+
+    this.employeeService.getEmployeeDepartmentsChangeHistory(id)
+    .subscribe(history => this.departmentsChangeHistory = history);
+
   }
 
   onOrganizationChange(organizationId: number): void {
@@ -140,7 +154,9 @@ export class EmployeeDetailsComponent implements OnInit {
   }
 
   goBack(): void {
-    this.location.back();
+
+    this.router.navigate(["/employees"]);
+
   }
 
   save(): void {
@@ -155,6 +171,6 @@ export class EmployeeDetailsComponent implements OnInit {
       this.employeeService.updateEmployee(this.form.value).subscribe();
     }
 
-    this.router.navigateByUrl("/employees");
+    this.router.navigate(["/employees"]);
   }
 }

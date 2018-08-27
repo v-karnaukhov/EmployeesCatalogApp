@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using EmployeesCatalog.Data.Common;
 using EmployeesCatalog.Data.Concrete;
 using EmployeesCatalog.Data.Data.Abstract;
+using EmployeesCatalog.Data.Data.Entities;
 using EmployeesCatalog.Data.Entities;
 
 namespace EmployeesCatalog.Data.Data.Concrete
@@ -14,6 +15,7 @@ namespace EmployeesCatalog.Data.Data.Concrete
         private IGenericRepository<Organization> _organizationRepository;
         private IGenericRepository<Department> _departmentRepository;
         private IGenericRepository<Employee> _employeeRepository;
+        private IGenericRepository<EmployeeDepartmentsChangesHistory> _employeeChangeDepartmentHistory;
 
         public UnitOfWork()
         {
@@ -35,6 +37,10 @@ namespace EmployeesCatalog.Data.Data.Concrete
         public IGenericRepository<Department> Departments =>_departmentRepository ?? (_departmentRepository = new GenericRepository<Department>(_context));
 
         public IGenericRepository<Employee> Employees => _employeeRepository ?? (_employeeRepository = new GenericRepository<Employee>(_context));
+
+        public IGenericRepository<EmployeeDepartmentsChangesHistory> EmployeeChangeDepartmentHistory =>
+            _employeeChangeDepartmentHistory ?? (_employeeChangeDepartmentHistory =
+                new GenericRepository<EmployeeDepartmentsChangesHistory>(_context));
 
         public int Save()
         {
