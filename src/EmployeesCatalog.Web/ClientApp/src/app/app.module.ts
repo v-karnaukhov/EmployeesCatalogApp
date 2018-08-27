@@ -6,7 +6,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppComponent } from "./app.component";
 import { MessagesComponent } from "./components/messages/messages.component";
 import { EmployeesListComponent } from "./components/employees-list/employees-list.component";
-import { AppRoutingModule } from ".//app-routing.module";
+import { AppRoutingModule } from "./app-routing.module";
 import { EmployeeDetailsComponent } from "./components/employee-details/employee-details.component";
 import {
   MatAutocompleteModule,
@@ -14,7 +14,6 @@ import {
   MatBottomSheetModule,
   MatButtonModule,
   MatButtonToggleModule,
-  MatCardModule,
   MatCheckboxModule,
   MatChipsModule,
   MatDatepickerModule,
@@ -45,16 +44,25 @@ import {
   MatTooltipModule,
   MatTreeModule
 } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfigService } from "./utils/config.service";
+import { XHRBackend } from "@angular/http";
+import { AuthenticateXHRBackend } from "./authenticate-xhr.backend";
+import { HomeComponent } from './components/home/home.component';
+import { AccountModule } from "./account/account.module";
+import { AuthGuard } from "./auth.guard";
 
 @NgModule({
   declarations: [
     AppComponent,
     MessagesComponent,
     EmployeesListComponent,
-    EmployeeDetailsComponent
+    EmployeeDetailsComponent,
+    HomeComponent
   ],
   imports: [
+    AccountModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
@@ -99,7 +107,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatTreeModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [AuthGuard, ConfigService, { 
+    provide: XHRBackend, 
+    useClass: AuthenticateXHRBackend
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using EmployeesCatalog.Data.Data.Entities;
 using EmployeesCatalog.Data.Entities;
 using EmployeesCatalog.Web.Models;
 
@@ -32,6 +33,12 @@ namespace EmployeesCatalog.Web.Mappings
 
             CreateMap<IEnumerable<EmployeeModel>, EmployeePagingModel>()
                 .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.ToList()));
+
+            #endregion
+
+            #region Auth
+
+            CreateMap<RegistrationViewModel, AppUser>().ForMember(au => au.UserName, map => map.MapFrom(vm => vm.Email));
 
             #endregion
         }
