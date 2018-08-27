@@ -512,13 +512,30 @@
 			"name": "Accounts",
 			"item": [
 				{
-					"name": "Add user",
+					"name": "Add  test user",
 					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"test@test.ru\",\n\t\"password\": \"qwerty\",\n\t\"firstName\": \"test\",\n\t\"lastName\": \"test\",\n\t\"location\": \"asd\"\n}"
+						},
 						"url": {
-							"raw": ""
+							"raw": "https://localhost:44379/api/accounts",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44379",
+							"path": [
+								"api",
+								"accounts"
+							]
 						}
 					},
 					"response": []
