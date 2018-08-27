@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeesCatalog.Data.Entities
@@ -11,6 +12,8 @@ namespace EmployeesCatalog.Data.Entities
         /// <summary>
         /// Уникальный идентификатор строки данных в БД.
         /// </summary>
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DepartmentId { get; set; }
 
         /// <summary>

@@ -68,6 +68,7 @@ namespace EmployeesCatalog.Web
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             using (var dbContext = new DatabaseContextFactory().CreateDbContext(connectionString))
             {
+                dbContext.Database.EnsureCreated();
                 dbContext.Database.Migrate();
             }
         }

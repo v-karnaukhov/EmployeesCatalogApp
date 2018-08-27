@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeesCatalog.Data.Entities
 {
@@ -12,6 +13,7 @@ namespace EmployeesCatalog.Data.Entities
         /// Уникальный идентификатор записи в БД.
         /// </summary>
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrganizationId { get; set; }
 
         /// <summary>

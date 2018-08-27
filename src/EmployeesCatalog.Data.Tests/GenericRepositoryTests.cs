@@ -32,8 +32,6 @@ namespace EmployeesCatalog.Data.Tests
             builder.UseInMemoryDatabase(databaseName: _inMemoryDbName);
 
             var context = new EmployeesContext(builder.Options);
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
 
             return context;
         }

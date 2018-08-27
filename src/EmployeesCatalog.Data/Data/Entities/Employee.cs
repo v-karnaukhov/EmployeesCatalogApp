@@ -13,6 +13,7 @@ namespace EmployeesCatalog.Data.Entities
         /// Уникальный идентификатор экземпляра сущности.
         /// </summary>
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EmployeeId { get; set; }
 
         /// <summary>

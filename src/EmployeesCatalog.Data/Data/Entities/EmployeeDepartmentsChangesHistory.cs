@@ -11,6 +11,7 @@ namespace EmployeesCatalog.Data.Data.Entities
     public class EmployeeDepartmentsChangesHistory
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EntryId { get; set; }
 
         /// <summary>
